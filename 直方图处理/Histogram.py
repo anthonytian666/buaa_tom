@@ -2,6 +2,14 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+def img_processing(input_img):
+
+    input_img_hist, output_img_hist, input_img_equalization = img_equalization(input_img)
+    input_img_negative = img_negative(input_img)
+    input_img_threshold = img_threshold(input_img, 128)
+
+    return input_img_hist,output_img_hist,input_img_equalization,input_img_negative,input_img_threshold
+
 def generate_hist(input_img):
 
     b, g, r = cv2.split(input_img)
@@ -73,36 +81,37 @@ indexs = np.arange(0,256,1)
 # 图像处理
 input_img_RGB_hist_astronaut,\
 output_img_RGB_hist_astronaut,\
-output_img_RGB_astronaut = img_equalization(input_img_RGB_astronaut)
-input_img_RGB_reverse_astronaut = img_negative(input_img_RGB_astronaut)
-input_img_RGB_threshold_astronaut = img_threshold(input_img_RGB_astronaut,128)
+output_img_RGB_astronaut,\
+input_img_RGB_reverse_astronaut,\
+input_img_RGB_threshold_astronaut = img_processing(input_img_RGB_astronaut)
 
 input_img_RGB_hist_cameraman,\
 output_img_RGB_hist_cameraman,\
-output_img_RGB_cameraman = img_equalization(input_img_RGB_cameraman)
-input_img_RGB_reverse_cameraman = img_negative(input_img_RGB_cameraman)
-input_img_RGB_threshold_cameraman = img_threshold(input_img_RGB_cameraman,128)
+output_img_RGB_cameraman,\
+input_img_RGB_reverse_cameraman,\
+input_img_RGB_threshold_cameraman= img_processing(input_img_RGB_cameraman)
 
 # 绘制直方图
-# fig, axes = plt.subplots(nrows=2, ncols=2, facecolor='cornsilk')
-# axes[0,0].bar(indexs,input_img_RGB_hist_cameraman,color = "blue",width = 1)
-# axes[0,0].set_title("input_img_hist_cameraman")
-# axes[0,1].bar(indexs,output_img_RGB_hist_cameraman,color = "green",width = 1)
-# axes[0,1].set_title("output_img_hist_cameraman")
-# axes[1,0].bar(indexs,input_img_RGB_hist_astronaut,color = "blue",width = 1)
-# axes[1,0].set_title("input_img_hist_astronaut")
-# axes[1,1].bar(indexs,output_img_RGB_hist_astronaut,color = "green",width = 1)
-# axes[1,1].set_title("output_img_hist_astronaut")
-fig, axes = plt.subplots(nrows=2, ncols=1, facecolor='cornsilk')
-axes[0].bar(indexs,generate_hist(input_img_RGB_reverse_cameraman),color = "blue",width = 1)
-axes[1].bar(indexs,generate_hist(input_img_RGB_reverse_astronaut),color = "green",width = 1)
-# axes[1].set_title("output_img_hist_cameraman")
+fig, axes = plt.subplots(nrows=2, ncols=2, facecolor='cornsilk')
+axes[0,0].bar(indexs,input_img_RGB_hist_cameraman,color = "blue",width = 1)
+axes[0,0].set_title("input_img_hist_cameraman")
+axes[0,1].bar(indexs,output_img_RGB_hist_cameraman,color = "green",width = 1)
+axes[0,1].set_title("output_img_hist_cameraman")
+axes[1,0].bar(indexs,input_img_RGB_hist_astronaut,color = "blue",width = 1)
+axes[1,0].set_title("input_img_hist_astronaut")
+axes[1,1].bar(indexs,output_img_RGB_hist_astronaut,color = "green",width = 1)
+axes[1,1].set_title("output_img_hist_astronaut")
 plt.show()
 
+# fig, axes = plt.subplots(nrows=2, ncols=1, facecolor='cornsilk')
+# axes[0].bar(indexs,generate_hist(input_img_RGB_reverse_cameraman),color = "blue",width = 1)
+# axes[1].bar(indexs,generate_hist(input_img_RGB_reverse_astronaut),color = "green",width = 1)
+# # axes[1].set_title("output_img_hist_cameraman")
+
 # 保存图片
-# cv2.imwrite("./astronaut_img_equ.jpg", output_img_RGB_astronaut)
-# cv2.imwrite("./astronaut_img_reverse.jpg", input_img_RGB_reverse_astronaut)
-# cv2.imwrite("./astronaut_img_threshold.jpg", input_img_RGB_threshold_astronaut)
-# cv2.imwrite("./cameraman_img_equ.jpg", output_img_RGB_cameraman)
-# cv2.imwrite("./cameraman_img_reverse.jpg", input_img_RGB_reverse_cameraman)
-# cv2.imwrite("./cameraman_img_threshold.jpg", input_img_RGB_threshold_cameraman)
+cv2.imwrite("./astronaut_img_equ.jpg", output_img_RGB_astronaut)
+cv2.imwrite("./astronaut_img_reverse.jpg", input_img_RGB_reverse_astronaut)
+cv2.imwrite("./astronaut_img_threshold.jpg", input_img_RGB_threshold_astronaut)
+cv2.imwrite("./cameraman_img_equ.jpg", output_img_RGB_cameraman)
+cv2.imwrite("./cameraman_img_reverse.jpg", input_img_RGB_reverse_cameraman)
+cv2.imwrite("./cameraman_img_threshold.jpg", input_img_RGB_threshold_cameraman)
