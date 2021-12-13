@@ -1,4 +1,4 @@
-# ZhiQiang Tian的代码仓库
+zhiqiang tian的代码仓库
 
 digital_image_processing_test
 
